@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sk.juvius.shareman.utils.tabledialog.TableDialogController">
+   <VBox alignment="CENTER" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <Label fx:id="projectLabel" style="-fx-font-weight: bold;" text="Project" />
+      <Label fx:id="userLabel" style="-fx-font-weight: bold;" text="User" />
+      <Label text="These files is going to be uploaded" />
+   </VBox>
+    <GridPane minHeight="400.0" prefWidth="615.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="60.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+        <TableView fx:id="table">
+           <columnResizePolicy>
+               <TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY" />
+           </columnResizePolicy>
+        </TableView>
+    </GridPane>
+   <HBox spacing="5.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="5.0">
+      <Label text="Selected:" />
+      <Label fx:id="selectedLabel" text="0 items" />
+   </HBox>
+   <HBox alignment="CENTER" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+       <VBox spacing="5.0">
+           <Button fx:id="addSingleBtn" disable="true" mnemonicParsing="false" prefWidth="100.0" text="Add single" />
+           <Button fx:id="addWholeBtn" disable="true" mnemonicParsing="false" prefWidth="100.0" text="Add whole" />
+       </VBox>
+      <Separator orientation="VERTICAL" />
+       <VBox spacing="5.0">
+           <Button fx:id="removeSingleBtn" disable="true" mnemonicParsing="false" prefWidth="100.0" text="Remove single" />
+           <Button fx:id="removeWholeBtn" disable="true" mnemonicParsing="false" prefWidth="100.0" text="Remove Whole" />
+       </VBox>
+      <Separator orientation="VERTICAL" />
+      <Button fx:id="uploadBtn" mnemonicParsing="false" onAction="#handleUploadBtn" prefHeight="55.0" prefWidth="100.0" text="Upload" />
+      </HBox>
+</AnchorPane>
