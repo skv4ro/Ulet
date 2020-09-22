@@ -21,12 +21,9 @@ public class LogoutController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        loginService.unverify();
+        loginService.unVerify();
         logoutView.setUserLabelText("");
-        loginView.setUserNameText("");
-        loginView.setPassword(new char[]{});
-        loginView.setRememberLogin(false);
-        loginView.setAutoLogin(false);
+        loginView.reset();
         logoutView.setVisible(false);
         loginView.setVisible(true);
     }

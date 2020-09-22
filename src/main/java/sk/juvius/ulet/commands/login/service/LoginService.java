@@ -12,7 +12,7 @@ public class LoginService {
     private final UserService userService;
     private final LoginCache cache;
     private boolean verified = false;
-    private String username;
+    private User user;
 
     public LoginService(UserService userService, LoginCache cache) {
         this.userService = userService;
@@ -30,7 +30,7 @@ public class LoginService {
             if(username != null) {
                 if(cache.getAutoLogin(username)) {
                     User user = userService.getUserByName(username);
-                    verify(username, user.getHash(), cache.getUserPassword(username));
+                    verify(user, cache.getUserPassword(username));
                 }
             }
         }
@@ -58,15 +58,15 @@ public class LoginService {
         cache.setLastLoggedIn(username);
     }
 
-    public boolean verify(String username, String hash, char[] password) {
+    public boolean verify(User user, char[] password) {
         SecureString sec = new SecureString(password);
-        verified = Password.check(sec, hash).withSCrypt();
+        verified = Password.check(sec, user.getHash()).withSCrypt();
         sec.clear();
-        this.username = username;
+        this.user = user;
         return verified;
     }
 
-    public void unverify() {
+    public void unVerify() {
         verified = false;
     }
 
@@ -74,7 +74,7 @@ public class LoginService {
         return verified;
     }
 
-    public String getUsername() {
-        return username;
+    public User getUser() {
+        return user;
     }
 }

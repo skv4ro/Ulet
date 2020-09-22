@@ -33,7 +33,7 @@ public class Login extends AbstractCommand {
     @Override
     public void OnCommand() throws jxthrowable {
         if(loginService.isVerified()) {
-            logoutView.setUserLabelText(loginService.getUsername());
+            logoutView.setUserLabelText(loginService.getUser().getName());
             logoutView.setVisible(true);
         } else {
             loginView.setVisible(true);

@@ -29,9 +29,8 @@ public class LoginController implements ActionListener {
             loginView.setPasswordVerified(false);
             return;
         }
-        String hash = user.getHash();
         char[] pass = loginView.getPassword();
-        boolean verified = loginService.verify(userName, hash, pass);
+        boolean verified = loginService.verify(user, pass);
         loginView.setPassword(new char[0]);
         if(verified) {
             String username = user.getName();
