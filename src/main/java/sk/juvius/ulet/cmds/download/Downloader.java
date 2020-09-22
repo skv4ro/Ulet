@@ -19,7 +19,7 @@ import com.ptc.pfc.pfcWindow.Window;
 import com.ptc.pfc.pfcWindow.Windows;
 import org.apache.commons.io.FileUtils;
 import sk.juvius.ulet.c;
-import sk.juvius.ulet.utils.Utilities;
+import sk.juvius.ulet.util.Utilities;
 
 import java.io.File;
 import java.io.IOException;

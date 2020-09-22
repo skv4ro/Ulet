@@ -4,6 +4,6 @@ java_app_class      sk.juvius.ulet.Main
 java_app_classpath  c:/users/skvarkaj/documents/ulet/build/bin/ulet.jar;c:/users/skvarkaj/documents/ulet/build/bin
 java_app_start      start
 java_app_stop       stop
-#delay_start         true
+#delay_start        true
 text_dir            c:/users/skvarkaj/documents/ulet/build/text
 end

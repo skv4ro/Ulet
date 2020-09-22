@@ -46,6 +46,16 @@
       <artifactId>sqlite-jdbc</artifactId>
       <version>3.32.3.2</version>
     </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.21</version>
+    </dependency>
+    <dependency>
+      <groupId>com.password4j</groupId>
+      <artifactId>password4j</artifactId>
+      <version>1.3.2</version>
+    </dependency>
     <!-- dependencies from local repo -->
     <dependency>
       <groupId>com.ptc</groupId>

@@ -19,7 +19,7 @@ public class UIBuilder extends AbstractBuilder {
     @Override
     public void build() throws jxthrowable {
         buildCommand(
-                new ShareManConnect(session),
+                new ShareManConnect(),
                 "u-let_connect.cmd",
                 "u-let_connect.png",
                 "u-let_connect.label",

@@ -1,6 +1,5 @@
 package sk.juvius.ulet.cmds.connect;
 
-import com.ptc.pfc.pfcSession.Session;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 
@@ -12,11 +11,9 @@ public class Dialog {
 
     private final JDialog jDialog = new JDialog();
     private final JFXPanel jfx = new JFXPanel();
-    private final Session session;
     private DialogController controller;
 
-    public Dialog(Session session) {
-        this.session = session;
+    public Dialog() {
         jDialog.setTitle("Select ShareMan Project");
         jDialog.setModal(true);
         jDialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
@@ -42,7 +39,7 @@ public class Dialog {
     }
 
     private Scene initFX() {
-        DialogView view = new DialogView(session);
+        DialogView view = new DialogView();
         controller = view.getController();
         controller.setParent(jDialog);
         Scene scene = new Scene(view);

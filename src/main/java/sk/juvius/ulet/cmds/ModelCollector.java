@@ -11,7 +11,7 @@ import com.ptc.pfc.pfcSelect.Selections;
 import com.ptc.pfc.pfcSelect.pfcSelect;
 import com.ptc.pfc.pfcSession.Session;
 import sk.juvius.ulet.c;
-import sk.juvius.ulet.utils.Utilities;
+import sk.juvius.ulet.util.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;

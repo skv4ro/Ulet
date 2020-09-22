@@ -2,7 +2,7 @@ package sk.juvius.ulet.cmds.upload;
 
 import com.ptc.cipjava.jxthrowable;
 import com.ptc.pfc.pfcSession.Session;
-import sk.juvius.ulet.utils.tabledialog.Record;
+import sk.juvius.ulet.util.tabledialog.Record;
 
 import java.util.List;
 

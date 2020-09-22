@@ -10,8 +10,8 @@ import com.ptc.pfc.pfcUI.pfcUI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sk.juvius.ulet.c;
-import sk.juvius.ulet.utils.tabledialog.Record;
-import sk.juvius.ulet.utils.tabledialog.TableDialog;
+import sk.juvius.ulet.util.tabledialog.Record;
+import sk.juvius.ulet.util.tabledialog.TableDialog;
 
 import java.io.File;
 import java.net.MalformedURLException;

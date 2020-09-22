@@ -8,7 +8,7 @@ import com.ptc.pfc.pfcModel.pfcModel;
 import com.ptc.pfc.pfcSession.FileListOpt;
 import com.ptc.pfc.pfcSession.Session;
 import com.ptc.pfc.pfcSolid.Solid;
-import sk.juvius.ulet.utils.Utilities;
+import sk.juvius.ulet.util.Utilities;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -26,7 +26,7 @@ public class Uploader {
     private final Map<String, Integer> workDirDrawingFiles = new HashMap<>();
 
 
-    Uploader(Session session) {
+    Uploader(Session session) throws jxthrowable {
         this.session = session;
         utils = new Utilities(session);
         fileUploader = new FileUploader(utils);

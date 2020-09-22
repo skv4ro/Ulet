@@ -7,7 +7,7 @@ import com.ptc.pfc.pfcSession.Session;
 import com.ptc.pfc.pfcUI.*;
 import org.apache.commons.io.FileUtils;
 import sk.juvius.ulet.c;
-import sk.juvius.ulet.utils.Utilities;
+import sk.juvius.ulet.util.Utilities;
 
 import java.io.File;
 import java.io.IOException;

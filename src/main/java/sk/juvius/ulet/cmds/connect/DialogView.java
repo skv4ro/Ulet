@@ -1,6 +1,5 @@
 package sk.juvius.ulet.cmds.connect;
 
-import com.ptc.pfc.pfcSession.Session;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -25,7 +24,7 @@ public class DialogView extends AnchorPane {
     private final Label curUserLabel;
     private final ComboBox<User> userComboBox;
 
-    public DialogView(Session session) {
+    public DialogView() {
         vBox = new VBox();
         vBox0 = new VBox();
         projectsComboBox = new ComboBox();
@@ -98,7 +97,7 @@ public class DialogView extends AnchorPane {
             }
         });
 
-        this.controller = new DialogController(this, session);
+        this.controller = new DialogController(this);
         connectButton.setOnAction(controller.connectionButtonHandler);
         cancelButton.setOnAction(controller.cancelButtonHandler);
     }

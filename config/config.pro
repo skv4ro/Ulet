@@ -1,7 +1,8 @@
 ﻿!********************************   Toolkit   *********************************
-!jlink_java_command c:\applic\jre\bin\java.exe -DcipDebugAll="true" -agentlib:jdwp=transport=dt_socket,address=8013,server=y,suspend=n1
-!jlink_java_command c:\applic\jre\bin\java.exe -agentlib:jdwp=transport=dt_socket,address=8013,server=y,suspend=n1
-jlink_java_command c:\applic\jre\bin\java.exe
+!jlink_java_command c:\applic\jre\bin\java.exe -DcipDebugAll="true" 
+jlink_java_command c:\applic\jre\bin\java.exe -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,address=8013,server=y,suspend=n
+!jlink_java_command c:\applic\jre\bin\java.exe
+!protkdat c:\Users\skvarkaj\Documents\creosout\protk.dat
 protkdat c:\Users\skvarkaj\Documents\ulet\build\protk.dat
 protkdat \\10.2.0.22\mechanika\.applic\avsys\toolkit\AVS-Utils\protk.dat
 !******************************   Start Party   *******************************

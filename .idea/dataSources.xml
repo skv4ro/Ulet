@@ -8,5 +8,11 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db.db</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="ulet@10.2.0.26" uuid="cfe2b438-274d-42ac-a2ab-f15ac24ccce2">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://10.2.0.26:3306/ulet</jdbc-url>
+    </data-source>
   </component>
 </project>

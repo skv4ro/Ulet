@@ -1,0 +1,12 @@
+%CIminwi_project_changed
+Ulet project has been changed to: %0w
+#
+#
+%CPselect_prompt
+Select part or assembly.
+#
+#
+%CIstart_success
+Ulet started!
+#
+#

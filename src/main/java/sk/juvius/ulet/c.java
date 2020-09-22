@@ -10,16 +10,15 @@ import sk.juvius.ulet.projects.ProjectManager;
 import sk.juvius.ulet.projects.User;
 import sk.juvius.ulet.projects.WorkDirChangeHandler;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.Properties;
 
 public class c {
 
-    private static final File DEBUG_FILE = new File("u:/JUVIUS/PROJEKTY/ShareMan/IDEA/stdout.debug.txt");
-
-    public static final String MSG_PATH = "path"; //Message file containing paths
-    public static final String MSG_CMD = "cmd"; //Message file containing commands labels and help texts
-    public static final String MSG_MSG = "msg"; //Message file containing messages displayed in message log
+    public static final String MSG_PATH = "path.txt"; //Message file containing paths
+    public static final String MSG_CMD = "cmd.txt"; //Message file containing commands labels and help texts
+    public static final String MSG_MSG = "msg.txt"; //Message file containing messages displayed in message log
     public static String ROOT;
 
     public static String checkerPath;
@@ -34,14 +33,14 @@ public class c {
 
     public static void a() {
 
-        debug();
+        JOptionPane.showMessageDialog(null, "");
 
         Session session; //Creo session object
 
         try {
             session = pfcGlobal.GetProESession();
 
-            GlobalContainer globalContainer = new GlobalContainer(session, c.class.getClassLoader());
+            //GlobalContainer globalContainer = new GlobalContainer(session, c.class.getClassLoader());
 
             //Path to root directory of the app
             ROOT = session.GetLocalizedMessageContents(MSG_PATH, "root", null);
@@ -104,14 +103,6 @@ public class c {
                     "log4j.appender.localLogger.File", path);
             PropertyConfigurator.configure(logConfig);
         } catch (IOException e) {
-        }
-    }
-
-    private static void debug() {
-        try {
-            System.setOut(new PrintStream(DEBUG_FILE));
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
         }
     }
 

@@ -1,7 +1,8 @@
 package sk.juvius.ulet;
 
+import com.ptc.cipjava.jxthrowable;
 import com.ptc.pfc.pfcSession.Session;
-import sk.juvius.ulet.utils.Utilities;
+import sk.juvius.ulet.util.Utilities;
 
 import java.io.File;
 
@@ -13,7 +14,7 @@ public final class GlobalContainer {
     private final ClassLoader defaultClassLoader;
     private final Utilities utils;
 
-    GlobalContainer(Session session, ClassLoader defaultClassLoader) {
+    GlobalContainer(Session session, ClassLoader defaultClassLoader) throws jxthrowable {
         this.session = session;
         this.defaultClassLoader = defaultClassLoader;
         this.utils = new Utilities(session);

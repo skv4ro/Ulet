@@ -1,6 +1,5 @@
 package sk.juvius.ulet.cmds.connect;
 
-import com.ptc.pfc.pfcSession.Session;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -8,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import sk.juvius.ulet.c;
 import sk.juvius.ulet.projects.Project;
+import sk.juvius.ulet.projects.ProjectManager;
 import sk.juvius.ulet.projects.User;
 
 import javax.swing.*;
@@ -20,16 +20,14 @@ public class DialogController {
     private final ComboBox<Project> projects;
     private final ComboBox<User> users;
     private JDialog parent;
-    private final Session session;
     private final Label curProjectLabel;
     private final Label userLabel;
 
-    public DialogController(DialogView view, Session session) {
+    public DialogController(DialogView view) {
         projects = view.getprojectsComboBox();
         curProjectLabel = view.getCurProjectLabel();
         users = view.getUserComboBox();
         userLabel = view.getCurUserLabel();
-        this.session = session;
     }
 
     public void loadConfig() {

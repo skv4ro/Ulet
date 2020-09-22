@@ -13,7 +13,7 @@ import com.ptc.pfc.pfcUI.*;
 import com.ptc.pfc.pfcWindow.Window;
 import com.ptc.pfc.pfcWindow.Windows;
 import sk.juvius.ulet.c;
-import sk.juvius.ulet.utils.Utilities;
+import sk.juvius.ulet.util.Utilities;
 import static sk.juvius.ulet.cmds.download.Downloader.TO_DOWNLOAD;
 import static sk.juvius.ulet.cmds.download.Downloader.TO_RELOAD;
 
