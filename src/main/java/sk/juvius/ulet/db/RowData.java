@@ -10,6 +10,7 @@ import sk.juvius.ulet.db.values.Value;
 import java.util.HashMap;
 
 public class RowData extends HashMap<Column, Value> {
+
     public String getString(StringColumn column) {
         Value value = get(column);
         if(value == null) return null;

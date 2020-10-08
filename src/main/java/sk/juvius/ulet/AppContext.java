@@ -2,18 +2,18 @@ package sk.juvius.ulet;
 
 import com.ptc.cipjava.jxthrowable;
 import com.ptc.cipjava.stringseq;
-import com.ptc.pfc.pfcCommand.UICommand;
 import com.ptc.pfc.pfcGlobal.pfcGlobal;
 import com.ptc.pfc.pfcSession.Session;
-import sk.juvius.ulet.commands.login.LoginCache;
-import sk.juvius.ulet.commands.login.service.LoginService;
-import sk.juvius.ulet.commands.login.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sk.juvius.ulet.commands.login.LoginCmd;
+import sk.juvius.ulet.context.CreoCommands;
+import sk.juvius.ulet.context.MessageManager;
+import sk.juvius.ulet.context.ServicesContext;
+import sk.juvius.ulet.db.CRUD;
 import sk.juvius.ulet.crypto.AES;
-import sk.juvius.ulet.db.Crud;
 import sk.juvius.ulet.db.DBManager;
 import sk.juvius.ulet.db.impl.MySQLManager;
-import sk.juvius.ulet.logging.Configuration;
-import sk.juvius.ulet.logging.Logger;
 import sk.juvius.ulet.util.Utilities;
 
 import javax.swing.*;
@@ -27,78 +27,36 @@ import java.lang.annotation.Target;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.nio.ByteBuffer;
 
 public class AppContext {
 
     public static final String APP_NAME = "Ulet";
-    public static final String MSG_MAIN = "ulet_main.txt";
-    public static final String MSG_COMMANDS = "ulet_cmd.txt";
-    public static final String MSG_PATH = "ulet_path.txt";
-    public static final String MSG_MSG = "ulet_msg.txt";
-    private static AppContext instance;
-    private static Logger logger;
-    private static final String root;
-    private String dbPath;
 
-    public final MessageManager msgManager = new MessageManager();
-    public final CreoCommands sysCommands = new CreoCommands();
+    private static final String mainMsgFile = "ulet_main.txt";
+    private static final String commandsMsgFile = "ulet_cmd.txt";
+    private static final String pathMsgFile = "ulet_path.txt";
+    private static final String msgMsgFile = "ulet_msg.txt";
+    private static final Logger log = LoggerFactory.getLogger(AppContext.class);
+    private static AppContext instance;
+    private static final String root;
+    private final DBManager dbManager;
+    private final CRUD crud;
+    public final ServicesContext services;
+    public final MessageManager messages;
+    public final CreoCommands creoCommands;
     private final Session session;
     private final Utilities utils;
-    private final File loginCacheFile = new File(System.getProperty("user.home") + "\\AppData\\Roaming\\Juvius\\Ulet", "login_data");
-    private final LoginCache loginCache = new LoginCache(loginCacheFile);
-
+    private final File appDataUletFile = new File(System.getProperty("user.home") + "\\AppData\\Roaming\\Juvius\\Ulet");
     private File publicKeyFile = null;
     private File logConfigFile = new File("c:/applic/ulet.log.cfg");
     private File stdout = null;
-    private LoginService loginService;
+    private final AppBuilder appBuilder;
 
     static {
         URL rootUrl = AppContext.class.getClassLoader().getResource("");
         if(rootUrl == null) root = null;
         else root = rootUrl.getFile();
-    }
-
-    public class MessageManager {
-        private void displayMsg(String msg) {
-            try {
-                session.UIDisplayLocalizedMessage(MSG_MSG, msg, null);
-            } catch (jxthrowable ignored) {}
-        }
-
-        public void displaySuccessStartMsg() {
-            displayMsg("start_success");
-        }
-
-        public void displayWrongModelTypeMsg() {
-            displayMsg("wrong_model_type");
-        }
-
-        public void displaySelPartOrAsmPrompt() {
-            displayMsg("sel_prt_or_asm_prompt");
-        }
-
-        public void displayNoSolidMsg() {
-            displayMsg("no_solid_in_model");
-        }
-
-        public void displayModelTablePrompt() {displayMsg("model_table_prompt");}
-    }
-
-    public class CreoCommands {
-        public static final String SKETCH = "ProCmdDatumSketCurve";
-        public static final String HOLE = "ProCmdHole";
-
-        private UICommand getSystemCmd(String strCmd) throws jxthrowable {
-            return session.UIGetCommand(strCmd);
-        }
-
-        public UICommand getSketchCmd() throws jxthrowable {
-            return getSystemCmd(SKETCH);
-        }
-
-        public UICommand getHoleCmd() throws jxthrowable {
-            return getSystemCmd(HOLE);
-        }
     }
 
     @Target(ElementType.METHOD)
@@ -107,18 +65,23 @@ public class AppContext {
     }
 
     private AppContext() throws jxthrowable {
-        AES.setKey("secret");
-        loginCache.load();
+        setAesKey();
         this.session = pfcGlobal.GetProESession();
+        this.dbManager = new MySQLManager("10.2.0.26", 3306, "ulet", "ulet", "avsys1788");
+        this.crud = new CRUD(dbManager);
+        this.messages = new MessageManager(session, msgMsgFile);
+        this.services = new ServicesContext(crud, appDataUletFile, messages);
         this.utils = new Utilities(session);
+        this.creoCommands = new CreoCommands(session);
+        this.appBuilder = new AppBuilder(this);
         assignAll();
         setStdout();
-        logger = new Logger(new Configuration(logConfigFile));
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            log.info("System laf successfully set");
         } catch (Exception e) {
-            logger.debug(Utilities.stackTraceToString(e));
-            logger.warn("Cannot set system laf.");
+            log.debug(Utilities.stackTraceToString(e));
+            log.warn("Cannot set system laf.");
         }
     }
 
@@ -133,10 +96,6 @@ public class AppContext {
         return instance;
     }
 
-    public static Logger getLogger() {
-        return logger;
-    }
-
     public static void stupidDebug(File file) {
         try {
             System.setOut(
@@ -144,6 +103,19 @@ public class AppContext {
         } catch (FileNotFoundException e) {
             Utilities.stackTraceToSwingMsg(e);
         }
+    }
+
+    private void setAesKey() {
+        String pcName = System.getenv("COMPUTERNAME");
+        String username = System.getProperty("user.name");
+        byte[] random = new byte[]{-12, 13, 95, 121, 18, -62, 35, 0};
+        byte[] pcNameBytes = pcName.getBytes();
+        byte[] usernameBytes = username.getBytes();
+        byte[] key = ByteBuffer.allocate(pcNameBytes.length + usernameBytes.length + random.length)
+                .put(pcNameBytes)
+                .put(usernameBytes)
+                .put(random).array();
+        AES.setKey(key);
     }
 
     private void setStdout() {
@@ -169,10 +141,6 @@ public class AppContext {
         return root;
     }
 
-    public String getDbPath() {
-        return dbPath;
-    }
-
     private String loadFromMsgFile(String msgFile, String msg, stringseq seq) {
         try {
             return session.GetMessageContents(msgFile, msg, seq);
@@ -182,7 +150,7 @@ public class AppContext {
     }
 
     private String loadFromPathMsgFile(String msg) {
-        return loadFromMsgFile(MSG_PATH, msg, null);
+        return loadFromMsgFile(pathMsgFile, msg, null);
     }
 
     private File fileFromOption(String msgPath) {
@@ -196,13 +164,6 @@ public class AppContext {
         publicKeyFile = fileFromOption("ulet_public_key");
     }
 
-    @Assign
-    private void assignLoginService() {
-        DBManager dbManager = new MySQLManager("10.2.0.26", 3306, "ulet", "ulet", "avsys1788");
-        Crud crud = new Crud(dbManager);
-        UserService userService = new UserService(crud);
-        loginService = new LoginService(userService, getLoginCache());
-    }
 
     public Session getSession() {
         return session;
@@ -216,11 +177,19 @@ public class AppContext {
         return publicKeyFile;
     }
 
-    public LoginCache getLoginCache() {
-        return loginCache;
+    public static String getCommandsMsgFile() {
+        return commandsMsgFile;
     }
 
-    public LoginService getLoginService() {
-        return loginService;
+    public File getAppDataUletFile() {
+        return appDataUletFile;
+    }
+
+    public CRUD getCrud() {
+        return crud;
+    }
+
+    public AppBuilder getAppBuilder() {
+        return appBuilder;
     }
 }

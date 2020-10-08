@@ -3,13 +3,16 @@ package sk.juvius.ulet.commands;
 import com.ptc.cipjava.jxthrowable;
 import com.ptc.pfc.pfcCommand.DefaultUICommandActionListener;
 import com.ptc.pfc.pfcCommand.UICommand;
+import com.ptc.pfc.pfcSession.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sk.juvius.ulet.AppContext;
-import sk.juvius.ulet.logging.Logger;
 import sk.juvius.ulet.util.Utilities;
 
 public abstract class AbstractCommand extends DefaultUICommandActionListener implements Command {
     protected final AppContext appContext;
-    private final Logger log = AppContext.getLogger();
+    protected final Session session;
+    private final Logger log = LoggerFactory.getLogger(AbstractCommand.class);
     private final boolean designated;
     private final String name;
     private UICommand systemCmd;
@@ -21,6 +24,7 @@ public abstract class AbstractCommand extends DefaultUICommandActionListener imp
     public AbstractCommand(AppContext appContext, boolean designate) {
         this.designated = designate;
         this.appContext = appContext;
+        this.session = appContext.getSession();
         name = getClass().getSimpleName();
     }
 
@@ -41,7 +45,7 @@ public abstract class AbstractCommand extends DefaultUICommandActionListener imp
 
     @Override
     public String getCmdName() {
-        String cmdPrefix = "Avsu";
+        String cmdPrefix = AppContext.APP_NAME;
         return cmdPrefix + getName();
     }
 
@@ -63,7 +67,7 @@ public abstract class AbstractCommand extends DefaultUICommandActionListener imp
     @Override
     public void build(String msgFile) {
         try {
-            systemCmd = appContext.getSession().UICreateCommand(getCmdName(), this);
+            systemCmd = session.UICreateCommand(getCmdName(), this);
             log.info("Command " + getCmdName() + " is built");
             if(designated) {
                 systemCmd.SetIcon(getIcon());
@@ -75,3 +79,5 @@ public abstract class AbstractCommand extends DefaultUICommandActionListener imp
         }
     }
 }
+
+//TODO dat prec session z commandov lebo tu uz je pridelene session

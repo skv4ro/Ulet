@@ -5,6 +5,7 @@ jlink_java_command c:\applic\jre\bin\java.exe -Xdebug -Xnoagent -Xrunjdwp:transp
 !protkdat c:\Users\skvarkaj\Documents\creosout\protk.dat
 protkdat c:\Users\skvarkaj\Documents\ulet\build\protk.dat
 protkdat \\10.2.0.22\mechanika\.applic\avsys\toolkit\AVS-Utils\protk.dat
+TK_ENABLE_RIBBON_CUSTOM_SAVE yes
 !******************************   Start Party   *******************************
 start_model_dir \\10.2.0.22\mechanika\.applic\avsys\resources\start_models
 template_designasm \\10.2.0.22\mechanika\.applic\avsys\resources\start_models\start_asm_avsys.asm

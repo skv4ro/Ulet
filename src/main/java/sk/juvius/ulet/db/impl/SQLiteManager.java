@@ -1,7 +1,7 @@
 package sk.juvius.ulet.db.impl;
 
 import org.sqlite.JDBC;
-import sk.juvius.ulet.AppContext;
+import sk.juvius.ulet.R;
 import sk.juvius.ulet.db.DBManager;
 
 import java.sql.Connection;
@@ -13,7 +13,7 @@ public class SQLiteManager implements DBManager {
     private final String dbPath;
 
     static {
-        System.setProperty("org.sqlite.lib.path", AppContext.getRoot());
+        System.setProperty("org.sqlite.lib.path", R.getResPath());
         System.setProperty("org.sqlite.lib.name", "sqlitejdbc.dll");
         try {
             DriverManager.registerDriver(new JDBC());

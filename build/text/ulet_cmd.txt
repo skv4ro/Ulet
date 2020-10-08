@@ -54,11 +54,27 @@ u-let_upload_whole.help
 Upload selected models to Ulet project directory. If selected model is assembly all children will be uploaded include drawings.
 #
 #
-login.label
+logincmd.label
 Login
 #
 #
-login.help
+logincmd.help
 Ulet login.
+#
+#
+repositorycmd.label
+Repository
+#
+#
+repositorycmd.help
+Ulet repositorycmd
+#
+#
+uploadcmd.label
+Upload
+#
+#
+uploadcmd.help
+Upload help
 #
 #

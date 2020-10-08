@@ -15,8 +15,10 @@ import com.ptc.pfc.pfcSession.Session;
 import com.ptc.pfc.pfcUI.MessageDialogOptions;
 import com.ptc.pfc.pfcUI.MessageDialogType;
 import com.ptc.pfc.pfcUI.pfcUI;
+import sk.juvius.ulet.R;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -181,5 +183,13 @@ public class Utilities {
 
     public MessageDialogOptions getErrorMDO() {
         return errorMDO;
+    }
+
+    public static Image getModelTypeImage(ModelType type) {
+        Image image = null;
+        if(type.getValue() == ModelType._MDL_ASSEMBLY) image = R.getImage("asm.png");
+        if(type.getValue() == ModelType._MDL_PART) image = R.getImage("prt.png");
+        if(type.getValue() == ModelType._MDL_DRAWING) image = R.getImage("drw.png");
+        return image;
     }
 }

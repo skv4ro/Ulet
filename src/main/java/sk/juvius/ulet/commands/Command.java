@@ -1,15 +1,18 @@
 package sk.juvius.ulet.commands;
 
+import com.ptc.cipjava.jxthrowable;
 import com.ptc.pfc.pfcCommand.UICommand;
 
 public interface Command {
-    public UICommand getSystemCmd();
+    UICommand getSystemCmd();
 
-    public String getName();
+    String getName();
 
-    public boolean isDesignated();
+    boolean isDesignated();
 
-    public String getCmdName();
+    String getCmdName();
 
-    public void build(String msgFile);
+    void build(String msgFile);
+
+    void run() throws jxthrowable;
 }

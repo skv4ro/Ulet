@@ -14,7 +14,7 @@
     <repository>
       <id>local_repo</id>
       <name>.m2</name>
-      <url>file:///c:/users/skvarkaj/.m2/repository</url>
+      <url>file:///${user.home}/.m2/repository</url>
     </repository>
   </repositories>
 
@@ -26,9 +26,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.7.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -55,6 +55,30 @@
       <groupId>com.password4j</groupId>
       <artifactId>password4j</artifactId>
       <version>1.3.2</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-nop</artifactId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-lang3</artifactId>
+          <groupId>org.apache.commons</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.5</version>
     </dependency>
     <!-- dependencies from local repo -->
     <dependency>
@@ -77,6 +101,22 @@
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>copy-resources</goal>
+              </goals>
+              <configuration>
+                <resources>
+                  <resource>
+                    <directory>src/main/resources</directory>
+                  </resource>
+                </resources>
+                <outputDirectory>build/res</outputDirectory>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <artifactId>maven-compiler-plugin</artifactId>
