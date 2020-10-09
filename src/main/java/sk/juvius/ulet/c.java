@@ -71,7 +71,7 @@ public class c {
 
             session.UIDisplayMessage(MSG_MSG, "started", null);
         } catch (Exception e) {
-            ErrorDialog.showErrorMsg(e);
+//            ErrorDialog.showErrorMsg(e);
         }
     }
 
@@ -107,13 +107,13 @@ public class c {
     }
 
     public static void debugMsg(Object msg) {
-        System.out.println(GlobalContainer.APP_NAME + ": " + msg);
+        System.out.println("Ulet" + ": " + msg);
     }
 
     public static void stackTrace(Exception e) {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
-        System.out.println(GlobalContainer.APP_NAME + ": " + sw.toString());
+        System.out.println("Ulet" + ": " + sw.toString());
     }
 }

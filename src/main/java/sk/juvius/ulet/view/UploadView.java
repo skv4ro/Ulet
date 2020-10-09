@@ -1,22 +1,21 @@
 package sk.juvius.ulet.view;
 
 import static sk.juvius.ulet.AppContext.APP_NAME;
+
+import com.ptc.pfc.pfcModel.ModelType;
 import sk.juvius.ulet.R;
 import sk.juvius.ulet.model.UploadItem;
 import sk.juvius.ulet.model.User;
 import sk.juvius.ulet.ui.Dialog;
 import sk.juvius.ulet.ui.Panel;
 import sk.juvius.ulet.ui.table.ColumnInfo;
+import sk.juvius.ulet.ui.table.renderer.ImageCellRenderer;
 import sk.juvius.ulet.ui.table.Table;
-import sk.juvius.ulet.util.Utilities;
+import sk.juvius.ulet.ui.table.ValueResolver;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
-import java.net.MalformedURLException;
 import java.util.List;
-import java.util.ArrayList;
 
 public class UploadView extends Dialog {
 
@@ -31,6 +30,7 @@ public class UploadView extends Dialog {
 
     public UploadView() {
         initColumns();
+        setModelTypeRenderer();
         setTitle(APP_NAME + " upload");
         setIconImage(R.getImage("upload.png"));
         sk.juvius.ulet.ui.Panel content = new Panel();
@@ -99,6 +99,10 @@ public class UploadView extends Dialog {
         itemsTable.setData(data);
     }
 
+    public JTextField getSearchTextField() {
+        return searchTextField;
+    }
+
     public Table<UploadItem> getItemsTable() {
         return itemsTable;
     }
@@ -113,11 +117,64 @@ public class UploadView extends Dialog {
     }
 
     private void initColumns() {
-        itemsTable.getColumns().add(new ColumnInfo("Type", Image.class, (row, col) -> Utilities.getModelTypeImage(itemsTable.getData().get(row).getType())));
+        itemsTable.getColumns().add(new ColumnInfo("Type", ModelType.class, new ValueResolver() {
+            @Override
+            public Object getValue(int row, int col) {
+                return itemsTable.getData().get(row).getType();
+            }
+
+            @Override
+            public String getString(int row, int col) {
+                Object value = getValue(row, col);
+                String strType = null;
+                if(value instanceof ModelType) {
+                    ModelType type = (ModelType) value;
+                    switch (type.getValue()) {
+                        case ModelType._MDL_ASSEMBLY: strType = "asm"; break;
+                        case ModelType._MDL_PART: strType = "prt"; break;
+                        case ModelType._MDL_DRAWING: strType = "drw"; break;
+                    }
+                }
+                return "$" + strType;
+            }
+        }));
         itemsTable.getColumns().add(new ColumnInfo("Instance name", String.class, (row, col) -> itemsTable.getData().get(row).getInstanceName()));
         itemsTable.getColumns().add(new ColumnInfo("Generic name", User.class, (row, col) -> itemsTable.getData().get(row).getGenericName()));
-        itemsTable.getColumns().add(new ColumnInfo("File version", Integer.class, (row, col) -> itemsTable.getData().get(row).getFileVersion()));
+        itemsTable.getColumns().add(new ColumnInfo("File version", Integer.class, new ValueResolver() {
+            @Override
+            public Object getValue(int row, int col) {
+                return itemsTable.getData().get(row).getFileVersion();
+            }
+
+            @Override
+            public String getString(int row, int col) {
+                Object value = getValue(row, col);
+                String strVer = null;
+                if(value instanceof Integer) {
+                    strVer = Integer.toString((int) value);
+                }
+                return "$v" + strVer;
+            }
+        }));
         itemsTable.getColumns().add(new ColumnInfo("Path", String.class, (row, col) -> itemsTable.getData().get(row).getPath()));
+    }
+
+    private void setModelTypeRenderer() {
+        itemsTable.setDefaultRenderer(ModelType.class, new ImageCellRenderer(itemsTable.getGridColor()) {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Image image = null;
+                if(value instanceof ModelType) {
+                    ModelType type = (ModelType) value;
+                    switch (type.getValue()) {
+                        case ModelType._MDL_ASSEMBLY: image = R.getImage("asm.png"); break;
+                        case ModelType._MDL_PART: image = R.getImage("prt.png"); break;
+                        case ModelType._MDL_DRAWING: image = R.getImage("drw.png"); break;
+                    }
+                }
+                return super.getTableCellRendererComponent(table, image, isSelected, hasFocus, row, column);
+            }
+        });
     }
 }
 

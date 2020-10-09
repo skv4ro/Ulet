@@ -6,25 +6,13 @@ import sk.juvius.ulet.crypto.AES;
 import sk.juvius.ulet.db.*;
 import sk.juvius.ulet.db.impl.MySQLManager;
 import sk.juvius.ulet.db.impl.SQLiteManager;
-import sk.juvius.ulet.model.Repository;
-import sk.juvius.ulet.model.UploadItem;
-import sk.juvius.ulet.ui.table.DynamicTableModel;
-import sk.juvius.ulet.model.User;
-import sk.juvius.ulet.ui.table.ColumnInfo;
-import sk.juvius.ulet.view.UploadView;
 
 import javax.swing.*;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 
-public class Test {
+public class RozneSkusky {
 
-    private static final Logger log = LoggerFactory.getLogger(Test.class);
+    private static final Logger log = LoggerFactory.getLogger(RozneSkusky.class);
 
     public static void main(String[] args) throws Exception {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

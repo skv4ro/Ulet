@@ -49,6 +49,10 @@ public class DynamicTableModel<T> extends AbstractTableModel {
         return columns.get(col).getResolverValue(row, col);
     }
 
+    public ColumnInfo getColumn(int i) {
+        return columns.get(i);
+    }
+
     public void addRow(T item) {
         items.add(item);
         int i = items.size() - 1;

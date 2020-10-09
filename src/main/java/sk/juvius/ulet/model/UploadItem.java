@@ -19,8 +19,8 @@ public class UploadItem {
 
     public UploadItem(ModelType type, String instanceName, String genericName, int fileVersion, String path) {
         this.type = type;
-        this.instanceName = instanceName.toLowerCase();
-        this.genericName = genericName.toLowerCase();
+        this.instanceName = StringUtils.lowerCase(instanceName);
+        this.genericName = StringUtils.lowerCase(genericName);
         this.fileVersion = fileVersion;
         this.path = path;
     }

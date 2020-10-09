@@ -1,6 +1,4 @@
-package sk.juvius.ulet.ui.table;
-
-import sk.juvius.ulet.R;
+package sk.juvius.ulet.ui.table.renderer;
 
 import javax.swing.*;
 import java.awt.*;

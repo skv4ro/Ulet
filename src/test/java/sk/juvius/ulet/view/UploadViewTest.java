@@ -3,19 +3,17 @@ package sk.juvius.ulet.view;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import sk.juvius.ulet.R;
 import sk.juvius.ulet.model.Repository;
 import sk.juvius.ulet.model.UploadItem;
 import sk.juvius.ulet.model.User;
-import sk.juvius.ulet.ui.table.CellRenderer;
+import sk.juvius.ulet.ui.table.renderer.CellRenderer;
 import sk.juvius.ulet.ui.table.ColumnInfo;
 
 import javax.swing.*;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class UploadViewTest {
 
@@ -73,7 +71,7 @@ class UploadViewTest {
             uw.getItemsTable().getModel().addColumn(new ColumnInfo("LOL", String.class, null));
             uw.setVisible(false);
         })).start();
+        uw.getItemsTable().setRowSorter(new TableRowSorter<>());
         uw.setVisible(true);
-        assertEquals(6, uw.getItemsTable().getModel().getColumnCount());
     }
 }

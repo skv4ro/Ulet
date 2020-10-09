@@ -1,7 +1,12 @@
 package sk.juvius.ulet.ui.table;
 
+import sk.juvius.ulet.ui.table.renderer.CellRenderer;
+import sk.juvius.ulet.ui.table.renderer.HeaderCellRenderer;
+import sk.juvius.ulet.ui.table.renderer.ImageCellRenderer;
+
 import javax.swing.*;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +16,7 @@ public class Table<T> extends JTable {
     protected DynamicTableModel<T> model;
     protected List<ColumnInfo> columns = new ArrayList<>();
     protected List<T> data = new ArrayList<>();
+    protected TableRowSorter<DynamicTableModel<T>> sorter;
 
     public Table() {
         getTableHeader().setDefaultRenderer(new HeaderCellRenderer());
@@ -20,7 +26,8 @@ public class Table<T> extends JTable {
         setRowHeight(20);
         setShowVerticalLines(false);
         setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
-        setAutoCreateRowSorter(true);
+        sorter = new TableRowSorter<>(model);
+        setRowSorter(sorter);
     }
 
     public void addRow(T item) {
@@ -53,6 +60,7 @@ public class Table<T> extends JTable {
     public void setData() {
         this.model = new DynamicTableModel<>(this.columns, this.data);
         setModel(this.model);
+        sorter.setModel(this.model);
     }
 
     public List<ColumnInfo> getColumns() {

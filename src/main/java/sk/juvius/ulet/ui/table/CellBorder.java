@@ -7,12 +7,12 @@ public class CellBorder extends EmptyBorder {
     public final boolean headerCell;
     private final Color gridColor;
     public boolean isStartCell = false;
-    CellBorder(int top, int left, int bottom, int right, Color gridColor, boolean headerCell) {
+    public CellBorder(int top, int left, int bottom, int right, Color gridColor, boolean headerCell) {
         super(top, left, bottom, right);
         this.gridColor = gridColor;
         this.headerCell = headerCell;
     }
-    CellBorder(Insets insets, Color gridColor, boolean headerCell) {
+    public CellBorder(Insets insets, Color gridColor, boolean headerCell) {
         super(insets);
         this.gridColor = gridColor;
         this.headerCell = headerCell;

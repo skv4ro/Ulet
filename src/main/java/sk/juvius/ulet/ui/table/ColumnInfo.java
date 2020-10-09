@@ -35,4 +35,9 @@ public class ColumnInfo {
         if(resolver == null) return null;
         return resolver.getValue(row, col);
     }
+
+    public String getResolverStringValue(int row, int col) {
+        if(resolver == null) return null;
+        return resolver.getString(row, col);
+    }
 }

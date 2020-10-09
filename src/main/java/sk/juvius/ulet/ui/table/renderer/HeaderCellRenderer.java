@@ -1,4 +1,6 @@
-package sk.juvius.ulet.ui.table;
+package sk.juvius.ulet.ui.table.renderer;
+
+import sk.juvius.ulet.ui.table.CellBorder;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
